@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">CryptoCurrencyApp</string>
+    <string name="base_url">https://api.coinmarketcap.com/v1/</string>
+    <string name="cryptocurrency_error_message">There is an error getting the data: \\n</string>
+
+</resources>

@@ -25,9 +25,10 @@ class AppModule(val app: Application) {
     @Singleton
     fun provideCryptoCurrenciesDao(database: Database): CryptoCurrenciesDao = database.cryptoCurrenciesDao()
 
+    /*
     @Provides
     @Singleton
     fun provideCryptocurrenciesViewModelFactory(factory: CryptocurrenciesViewModelFactory): ViewModelProvider.Factory = factory
-
+*/
 
 }

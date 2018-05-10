@@ -1,6 +1,7 @@
 package com.xdai.cryptocurrencyapp.ui
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -20,8 +21,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
 
-    @Inject
-    lateinit var cryptocurrenciesViewModelFactory: CryptocurrenciesViewModelFactory
+    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var cryptocurrenciesViewModel: CryptocurrenciesViewModel
 
     private var cryptoCurrencyList: MutableList<CryptoCurrency> = ArrayList()
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         AndroidInjection.inject(this)
         initializeRecyclerView()
-        cryptocurrenciesViewModel = ViewModelProviders.of(this, cryptocurrenciesViewModelFactory).get(CryptocurrenciesViewModel::class.java)
+        cryptocurrenciesViewModel = ViewModelProviders.of(this, viewModelFactory).get(CryptocurrenciesViewModel::class.java)
         binding.viewModel = cryptocurrenciesViewModel
         binding.executePendingBindings()
         cryptocurrenciesViewModel.loadCryptoCurrencies()

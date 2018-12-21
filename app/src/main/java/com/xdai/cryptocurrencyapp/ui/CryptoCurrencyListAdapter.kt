@@ -19,7 +19,7 @@ class CryptoCurrencyListAdapter(private val context: Context, cryptoCurrencies: 
         cryptoCurrencyList = cryptoCurrencies as ArrayList<CryptoCurrency>
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CryptoCurrencyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CryptoCurrencyViewHolder {
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.currency_item, parent, false)
 
         //val itemView = LayoutInflater.from(context).inflate(R.layout.currency_item, parent,false)
@@ -31,7 +31,7 @@ class CryptoCurrencyListAdapter(private val context: Context, cryptoCurrencies: 
         return cryptoCurrencyList.size
     }
 
-    override fun onBindViewHolder(holder: CryptoCurrencyViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: CryptoCurrencyViewHolder, position: Int) {
         val cryptoCurrency = cryptoCurrencyList[position]
         binding.cryptoCurrency = cryptoCurrency
         binding.executePendingBindings()

@@ -1,10 +1,12 @@
 # CryptoCurrencyApp
 A simple Android app to show top 100 Crypto Currency prices with  
-Kotlin  
-ConstraintLayout  
-Data binding library  
+Android Jetpack
 MVVM architecture + repository pattern  
+Kotlin 
 RxJava2  
-Dagger 2  
+Dagger2  
 Retrofit  
-Room  
+Room
+Data binding library  
+ConstraintLayout  
+

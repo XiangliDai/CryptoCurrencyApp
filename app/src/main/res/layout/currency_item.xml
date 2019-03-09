@@ -8,7 +8,7 @@
             type="com.xdai.cryptocurrencyapp.models.CryptoCurrency"
             />
     </data>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -48,5 +48,5 @@
         android:text="@{cryptoCurrency.priceBtc}"
 
         app:layout_constraintStart_toEndOf="@+id/price_usd"/>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

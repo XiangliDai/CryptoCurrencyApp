@@ -1,51 +1,57 @@
 package com.xdai.cryptocurrencyapp.viewModels
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.xdai.cryptocurrencyapp.models.CryptoCurrency
 import com.xdai.cryptocurrencyapp.repositories.CryptocurrencyRepository
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class CryptocurrenciesViewModel @Inject constructor(private val cryptocurrencyRepository: CryptocurrencyRepository) :ViewModel() {
+class CryptocurrenciesViewModel @Inject constructor(private val cryptocurrencyRepository: CryptocurrencyRepository) : ViewModel() {
 
-    val cryptoCurrenciesResult: MutableLiveData<List<CryptoCurrency>> = MutableLiveData()
-    val cryptoCurrenciesError: MutableLiveData<String> = MutableLiveData()
-    lateinit var disposableObserver: DisposableObserver<List<CryptoCurrency>>
+
+    private val cryptoCurrenciesResult: MutableLiveData<List<CryptoCurrency>> = MutableLiveData()
+    private val cryptoCurrenciesError: MutableLiveData<String> = MutableLiveData()
+
+    val result: LiveData<List<CryptoCurrency>>
+        get() = cryptoCurrenciesResult
+    val error: LiveData<String>
+        get() = cryptoCurrenciesError
+
+    val compositeDisposable: CompositeDisposable = CompositeDisposable()
     var isLoading = ObservableField(true)
-    fun cryptoCurrenciesResult(): LiveData<List<CryptoCurrency>>{
-        return cryptoCurrenciesResult
+
+
+    init {
+        loadCryptoCurrencies()
     }
 
-    fun cryptoCurrenciesError(): LiveData<String>{
-        return cryptoCurrenciesError
-}
+    override fun onCleared() {
+        compositeDisposable.dispose()
+        super.onCleared()
+    }
 
-    fun loadCryptoCurrencies(){
+    fun loadCryptoCurrencies() {
         isLoading.set(true)
-        disposableObserver = object : DisposableObserver<List<CryptoCurrency>>(){
-            override fun onComplete() {
-            }
-
-            override fun onNext(t: List<CryptoCurrency>) {
-                isLoading.set(false)
-                cryptoCurrenciesResult.postValue(t)
-            }
-
-            override fun onError(e: Throwable) {
-                isLoading.set(false)
-                cryptoCurrenciesError.postValue(e.message)
-            }
-
-        }
-        cryptocurrencyRepository.getCryptoCurrencies()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(disposableObserver)
+        compositeDisposable.add(
+                cryptocurrencyRepository.getCryptoCurrencies()
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                Consumer { cryptoList ->
+                                    isLoading.set(false)
+                                    cryptoCurrenciesResult.value = cryptoList
+                                },
+                                Consumer { e ->
+                                    isLoading.set(false)
+                                    cryptoCurrenciesError.value = e.localizedMessage
+                                })
+        )
     }
 }

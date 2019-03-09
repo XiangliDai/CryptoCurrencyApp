@@ -26,9 +26,6 @@ class CryptocurrencyRepository @Inject constructor(val apiInterface: ApiInterfac
     fun getCryptoCurrenciesFromNetwork(): Observable<List<CryptoCurrency>> {
         return apiInterface.getCryptoCurrencies("0").doOnNext {
             Log.d("CryptocurrencyRepositor", "get data from network:" + it.size.toString())
-           /* for (item in it) {
-                cryptoCurrenciesDao.insertCryptoCurrency(item)
-            }*/
             cryptoCurrenciesDao.insertAllCryptoCurrencies(it)
         }.doOnError {
             Log.e("CryptocurrencyRepositor", "get data from network:" + it.message)

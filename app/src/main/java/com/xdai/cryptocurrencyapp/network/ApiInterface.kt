@@ -2,6 +2,7 @@ package com.xdai.cryptocurrencyapp.network
 
 import com.xdai.cryptocurrencyapp.models.CryptoCurrency
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
 

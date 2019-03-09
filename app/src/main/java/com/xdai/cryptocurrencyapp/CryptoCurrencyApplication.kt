@@ -2,13 +2,10 @@ package com.xdai.cryptocurrencyapp
 
 import android.app.Activity
 import android.app.Application
-import android.nfc.Tag
 import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.iid.InstanceIdResult
 import com.xdai.cryptocurrencyapp.di.components.DaggerAppComponent
 import com.xdai.cryptocurrencyapp.di.modules.AppModule
 import com.xdai.cryptocurrencyapp.di.modules.NetworkModule
@@ -17,7 +14,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
-class CryptoCurrencyApplication: Application(), HasActivityInjector  {
+class CryptoCurrencyApplication : Application(), HasActivityInjector {
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>

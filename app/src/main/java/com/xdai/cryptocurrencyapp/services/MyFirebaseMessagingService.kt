@@ -2,9 +2,10 @@ package com.xdai.cryptocurrencyapp.services
 
 import android.app.Application
 import android.app.NotificationManager
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
+
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -52,7 +53,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         var newMessageNotification = NotificationCompat.Builder(this)
-
                 .setContentTitle( remoteMessage?.notification?.title)
                 .setContentText(remoteMessage?.notification?.body)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
